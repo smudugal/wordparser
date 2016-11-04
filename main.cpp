@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string.h>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -24,14 +25,19 @@ int main(int argc, char* argv[]){
 
     if(myReadFile.is_open()){
         while(1){
-            if(getline(myReadFile, buf,' ')){
-                if(num_strings++ <= 100){
+            if(getline(myReadFile, buf,'\n')){
+                // Get rid of all the special characters
+                buf.erase(remove_if(buf.begin(), buf.end(),::ispunct), buf.end());
+
+                myWriteFile << buf<<endl;
+
+               /* if(num_strings++ <= 100){
                      dest_buf.push_back(buf);
                 }else{
                     write_file(&myWriteFile, &dest_buf);
                     num_strings = 0;
                 }
-                cout << buf<<endl;
+                cout << buf<<endl;*/
             }else{
                 break;
             }
